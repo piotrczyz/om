@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Otwórz w Outlook</title>
+<style>
+  body{font-family:-apple-system,system-ui,sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh;margin:0;background:#f3f6fb;color:#222}
+  a.btn{display:block;background:#0f6cbd;color:#fff;text-decoration:none;font-size:22px;font-weight:600;padding:22px 36px;border-radius:14px;margin:12px}
+  a.alt{color:#0f6cbd;font-size:15px;margin-top:18px}
+  p{color:#666;font-size:14px;text-align:center;max-width:320px}
+</style>
+</head>
+<body>
+<a id="open" class="btn" href="#">📧 Otwórz w Outlook</a>
+<a id="web" class="alt" href="#">otwórz w przeglądarce</a>
+<p id="msg"></p>
+<script>
+// Message id travels in the URL fragment (#...), which browsers never send to the server.
+(function () {
+  var id = decodeURIComponent((location.hash || "").slice(1));
+  var open = document.getElementById("open"), web = document.getElementById("web");
+  if (!id) { document.getElementById("msg").textContent = "Brak identyfikatora maila w linku."; open.style.display = web.style.display = "none"; return; }
+  var app = "ms-outlook://emails/message/open?restID=" + encodeURIComponent(id);
+  open.href = app;
+  web.href = "https://outlook.office365.com/owa/?ItemID=" + encodeURIComponent(id) + "&exvsurl=1&viewmodel=ReadMessageItem";
+  try { window.location.href = app; } catch (e) {}
+})();
+</script>
+</body>
+</html>
