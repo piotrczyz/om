@@ -25,7 +25,7 @@
   if (!id) { document.getElementById("msg").textContent = "Brak identyfikatora maila w linku."; open.style.display = web.style.display = "none"; return; }
   var app = "ms-outlook://emails/message/open?restID=" + encodeURIComponent(id);
   open.href = app;
-  web.href = "https://outlook.office365.com/owa/?ItemID=" + encodeURIComponent(id) + "&exvsurl=1&viewmodel=ReadMessageItem";
+  web.href = "https://outlook.office365.com/owa/?ItemID=" + encodeURIComponent(id.replace(/-/g,"/").replace(/_/g,"+")) + "&exvsurl=1&viewmodel=ReadMessageItem";
   try { window.location.href = app; } catch (e) {}
 })();
 </script>
